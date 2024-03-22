@@ -7,7 +7,7 @@ const firebaseConfig = {
   apiKey: "API_KEY",
   authDomain: "PROJECT_ID.firebaseapp.com",
   // The value of `databaseURL` depends on the location of the database
-  databaseURL: "https://DATABASE_NAME.REGION.firebasedatabase.app",
+  databaseURL: import.meta.env.VITE_API_URL,
   projectId: "PROJECT_ID",
   storageBucket: "PROJECT_ID.appspot.com",
   messagingSenderId: "SENDER_ID",
