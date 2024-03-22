@@ -10,6 +10,8 @@ const DB_MESSAGES_KEY = "messages";
 function App() {
   const [messages, setMessages] = useState([]);
   const [textInputValue, setTextInputValue] = useState("");
+  const [fileInputFile, setFileInputFile] = useState(null);
+  const [fileInputValue, setFileInputValue] = useState("");
 
   useEffect(() => {
     const messagesRef = ref(database, DB_MESSAGES_KEY);
@@ -42,24 +44,41 @@ function App() {
   ));
 
   return (
-    <>
       <div className="background-image">
       <div>
         <img src={logo} className="logo" alt="Rocket logo" />
       </div>
       <h1>Instagram Chatbox</h1>
-      <div className="card">
-      <input
-        type="text"
-        value={textInputValue}
-        onChange={(e) => setTextInputValue(e.target.value)}
-        placeholder="Type your message here"
-      />
-      <button onClick={writeData}>Send</button>
-      <ol>{messageListItems}</ol>
-    </div>
-    </div>
-    </>
+      <div className="card" style={{ display: 'flex', flexDirection: 'column'}}>
+  <form onSubmit={writeData}>
+    <input
+      type="file"
+      value={fileInputValue}
+      accept=".jpg, .jpeg, .png"
+      onChange={(e) => {
+        setFileInputFile(e.target.files[0]);
+        setFileInputValue(e.target.value);
+      }}
+      style={{ width: '50%' }} // 设置宽度为100%
+    />
+    <br />
+    <input
+      type="text"
+      value={textInputValue}
+      onChange={(e) => setTextInputValue(e.target.value)}
+      placeholder="Type your message here"
+      style={{ width: '40%' }} // 设置宽度为100%
+    />
+    <input
+      type="submit"
+      value="Send"
+      // Disable Send button when text input is empty
+      disabled={!textInputValue}
+    />
+  </form>
+  <ol>{messageListItems}</ol>
+</div>
+   </div>
   );
 }
 
